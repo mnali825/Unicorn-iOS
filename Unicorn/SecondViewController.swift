@@ -39,40 +39,42 @@ class SecondViewController: UIViewController, UITableViewDataSource, UITableView
             locationCost.append(index*index*1250)
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
-            selector: "refresh",
-            name: "reloadTableView",
+            selector: #selector(SecondViewController.refresh),
+            name: NSNotification.Name(rawValue: "reloadTableView"),
             object: nil)
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.tableView.reloadData()
         currNumEmployees = Employees.count
-        titleLabel.text = "Employees \(currNumEmployees)/\(totalNumEmployees)"
+        if let numEmployees = currNumEmployees {
+            titleLabel.text = "Employees \(numEmployees)/\(totalNumEmployees)"
+        }
 
         currentLocationLabel.text = "Current : \(locations[currentLocation])"
         locationUpgradeLabel.text = "Upgrade : \(locations[currentLocation + 1]) (+\(employeeLimit[currentLocation+1]) Employees)"
         locationCostLabel.text = "Cost : $\(locationCost[currentLocation])"
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return Employees.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("Employees") as? EmployeesTableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "Employees") as? EmployeesTableViewCell {
             cell.configureCell(Employees[indexPath.row])
             
             cell.fireButton.tag = indexPath.row
-            let tapGesture = UITapGestureRecognizer(target: self, action: Selector("fireEmployee:"))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(SecondViewController.fireEmployee(_:)))
             cell.fireButton.addGestureRecognizer(tapGesture)
 
             return cell
@@ -81,10 +83,10 @@ class SecondViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
 
-    @IBAction func upgradeLocation(sender: AnyObject) {
+    @IBAction func upgradeLocation(_ sender: AnyObject) {
         if currentLocation < locations.count - 1  && money >= locationCost[currentLocation]{
             money -= locationCost[currentLocation]
-            currentLocation++
+            currentLocation += 1
             currentLocationLabel.text = "Current : \(locations[currentLocation])"
             
             if currentLocation < locations.count - 1 {
@@ -95,21 +97,24 @@ class SecondViewController: UIViewController, UITableViewDataSource, UITableView
 
             locationCostLabel.text = "Cost : $\(locationCost[currentLocation])"
             totalNumEmployees += employeeLimit[currentLocation]
-            titleLabel.text = "Employees \(currNumEmployees)/\(totalNumEmployees)"
+            if let numEmployees = currNumEmployees {
+                titleLabel.text = "Employees \(numEmployees)/\(totalNumEmployees)"
+            }
+            
         }
 
     }
     
-    func fireEmployee(sender: UITapGestureRecognizer)
+    func fireEmployee(_ sender: UITapGestureRecognizer)
     {
         if let button = sender.view as? UIButton
         {
                 
                 //Find current cell and add it to Employees
-                let indexPath = NSIndexPath(forRow: button.tag, inSection: 0)
-                let cell = tableView.cellForRowAtIndexPath(indexPath) as? EmployeesTableViewCell
+                let indexPath = IndexPath(row: button.tag, section: 0)
+                let cell = tableView.cellForRow(at: indexPath) as? EmployeesTableViewCell
 
-                Employees.removeAtIndex(button.tag)
+                Employees.remove(at: button.tag)
                 
                 totalMoneyIncrease -= (cell?.profit)!
                 
@@ -118,8 +123,8 @@ class SecondViewController: UIViewController, UITableViewDataSource, UITableView
                 self.title = "Employees \(Employees.count)/\(totalNumEmployees)"
                 
                 //Decrememnt number of rows and delete row at index path
-                possibleEmployees.removeAtIndex(button.tag)
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                possibleEmployees.remove(at: button.tag)
+                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                 self.tableView.reloadData()
 
         }

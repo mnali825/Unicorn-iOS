@@ -251,15 +251,18 @@
 					E999A1F11CA4CA6500BF3647 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = RJNMP7GN27;
+						LastSwiftMigration = 0820;
 					};
 					E999A2071CA4CA6700BF3647 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = RJNMP7GN27;
+						LastSwiftMigration = 0820;
 						TestTargetID = E999A1F11CA4CA6500BF3647;
 					};
 					E999A2121CA4CA6700BF3647 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = RJNMP7GN27;
+						LastSwiftMigration = 0820;
 						TestTargetID = E999A1F11CA4CA6500BF3647;
 					};
 				};
@@ -470,10 +473,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RJNMP7GN27;
 				INFOPLIST_FILE = Unicorn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.herban.Unicorn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -481,10 +486,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RJNMP7GN27;
 				INFOPLIST_FILE = Unicorn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.herban.Unicorn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -496,6 +503,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.herban.UnicornTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Unicorn.app/Unicorn";
 			};
 			name = Debug;
@@ -508,6 +516,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.herban.UnicornTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Unicorn.app/Unicorn";
 			};
 			name = Release;
@@ -519,6 +528,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.herban.UnicornUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Unicorn;
 				USES_XCTRUNNER = YES;
 			};
@@ -531,6 +541,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.herban.UnicornUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Unicorn;
 				USES_XCTRUNNER = YES;
 			};

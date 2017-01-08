@@ -36,25 +36,25 @@ class CodingTableViewCell: UITableViewCell {
         }
     }
     
-    func configureCell(title:String, required:Int, gained:Int, uses:String, profit:Int, onOrNah:Bool) {
+    func configureCell(_ title:String, required:Int, gained:Int, uses:String, profit:Int, onOrNah:Bool) {
         
         if knowledge >= required && onOrNah == true{
-            requiredLabel.textColor = UIColor.greenColor()
+            requiredLabel.textColor = UIColor.green
             requiredLabel.text = "Required: \(required) knowledge"
-            select.hidden = false
+            select.isHidden = false
         } else if knowledge >= required && onOrNah == false {
             updateLearnedSkillLabel()
-            select.hidden = true
+            select.isHidden = true
         } else if knowledge <= required && onOrNah == false {
-            select.hidden = true
+            select.isHidden = true
             updateLearnedSkillLabel()
         } else {
-            requiredLabel.textColor = UIColor.redColor()
+            requiredLabel.textColor = UIColor.red
             requiredLabel.text = "Required: \(required) knowledge"
-            select.hidden = true
+            select.isHidden = true
         }
-        gainedLabel.textColor = UIColor.greenColor()
-        averageProfitLabel.textColor = UIColor.greenColor()
+        gainedLabel.textColor = UIColor.green
+        averageProfitLabel.textColor = UIColor.green
         
         
         self.title.text = title
@@ -70,11 +70,11 @@ class CodingTableViewCell: UITableViewCell {
     }
     
     
-    @IBAction func learnLanguage(sender: UIButton) {
-        NSNotificationCenter.defaultCenter().postNotificationName("reloadTableView", object: self)
+    @IBAction func learnLanguage(_ sender: UIButton) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadTableView"), object: self)
         if knowledge >= requirement {
             totalKnowledgeIncrease += gainedKnowledge
-            select.hidden = true
+            select.isHidden = true
             isActive[select.tag] = false
             updateLearnedSkillLabel()
             knowledge -= requirement
@@ -97,7 +97,7 @@ class CodingTableViewCell: UITableViewCell {
     }
     
     func updateLearnedSkillLabel() {
-        requiredLabel.textColor = UIColor.greenColor()
+        requiredLabel.textColor = UIColor.green
         requiredLabel.text = "Learned!"
     }
 

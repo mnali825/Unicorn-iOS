@@ -39,28 +39,32 @@ class RecruitTableViewCell: UITableViewCell {
     }
 
 
-    func configureCell(indexPath:Int) {
+    func configureCell(_ indexPath:Int) {
         currentEmployee = possibleEmployees[indexPath]
         nameLabel.text = currentEmployee.name
         
         efficiencyColorChange(currentEmployee.efficiency)
         efficiencyLabel.text = "Efficiency: \(currentEmployee.efficiency*100)% "
         
-        costLabel.textColor = UIColor.redColor()
+        costLabel.textColor = UIColor.red
         costLabel.text = "Cost: $\(currentEmployee.salary)/sec"
         
-        profitLabel.textColor = UIColor.greenColor()
+        profitLabel.textColor = UIColor.green
         if currentCodingLanguage == "" {
             let currentIncome = 0.0
-            profitLabel.textColor = UIColor.redColor()
+            profitLabel.textColor = UIColor.red
             profit = Int(currentEmployee.efficiency * currentIncome - currentEmployee.salary)
-            profitLabel.text = "Profit: $\(profit)/sec Learn a Language!"
-            button.hidden = true
+            if let profitText = profit {
+                profitLabel.text = "Profit: $\(profitText)/sec Learn a Language!"
+            }
+            button.isHidden = true
         } else {
             let currentIncome = Double(languageKnowledge[currentCodingLanguage]!)
             profit = Int(currentEmployee.efficiency * currentIncome - currentEmployee.salary)
-            profitLabel.text = "Profit: $\(profit)/sec (\(currentCodingLanguage))"
-            button.hidden = false
+            if let profitText = profit {
+                profitLabel.text = "Profit: $\(profitText)/sec (\(currentCodingLanguage))"
+            }
+            button.isHidden = false
         }
 
         
@@ -69,18 +73,18 @@ class RecruitTableViewCell: UITableViewCell {
         
     }
     
-    @IBAction func hireEmployee(sender: UIButton) {
+    @IBAction func hireEmployee(_ sender: UIButton) {
         
     }
     
     
-    func efficiencyColorChange(efficiency:Double) {
+    func efficiencyColorChange(_ efficiency:Double) {
         if efficiency >= 0.75 {
-            efficiencyLabel.textColor = UIColor.greenColor()
+            efficiencyLabel.textColor = UIColor.green
         } else if efficiency >= 0.3 && efficiency < 0.75 {
-            efficiencyLabel.textColor = UIColor.orangeColor()
+            efficiencyLabel.textColor = UIColor.orange
         } else {
-            efficiencyLabel.textColor = UIColor.redColor()
+            efficiencyLabel.textColor = UIColor.red
         }
     }
 

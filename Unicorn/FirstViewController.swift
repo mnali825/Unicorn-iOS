@@ -8,15 +8,15 @@
 
 import UIKit
 
-var knowledge:Int = 10000
+var knowledge:Int = 100
 var totalKnowledgeIncrease:Int = 0
-var money:Int = 10000
+var money:Int = 100
 var totalMoneyIncrease:Int = 0
 
 class FirstViewController: UIViewController {
 
     var totalMoney:Int = 0
-    var timer = NSTimer()
+    var timer = Timer()
     @IBOutlet var moneyLabel: UILabel!
     @IBOutlet var totalMoneyLabel: UILabel!
     @IBOutlet var knowledgeLabel: UILabel!
@@ -31,16 +31,16 @@ class FirstViewController: UIViewController {
         updateMoneyLabel()
         updateKnowledgeLabel()
         
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         learnButton.layer.cornerRadius = 5.0
         recruitButton.layer.cornerRadius = 5.0
         hackButton.layer.cornerRadius = 5.0
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "countUp", userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(FirstViewController.countUp), userInfo: nil, repeats: true)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     func countUp() {

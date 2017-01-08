@@ -18,12 +18,12 @@ public extension Array {
 
 public extension Int {
     /// SwiftRandom extension
-    public static func random(range: Range<Int>) -> Int {
-        return range.startIndex + Int(arc4random_uniform(UInt32(range.endIndex - range.startIndex)))
+    public static func random(_ range: Range<Int>) -> Int {
+        return range.lowerBound + Int(arc4random_uniform(UInt32(range.upperBound - range.lowerBound)))
     }
     
     /// SwiftRandom extension
-    public static func random(lower: Int = 0, _ upper: Int = 100) -> Int {
+    public static func random(_ lower: Int = 0, _ upper: Int = 100) -> Int {
         return lower + Int(arc4random_uniform(UInt32(upper - lower + 1)))
     }
 }
@@ -37,14 +37,14 @@ class Employee {
     
     var salary:Double = 0.50
     var efficiency:Double!
-    var min:Int = 10
-    var max:Int = 75
+    var min:UInt32 = 10
+    var max:UInt32 = 75
     var profit:Int!
     //var currentCodingLanguage:CodingLanguage!
     
     init() {
         name = randomFakeName()
-        let x = randomInt(min...max)
+        let x = arc4random_uniform(max) + min
         efficiency = Double(x)/100
         salary*=(efficiency+0.2)
         catchPhrase = randomQuote.randomItem()
@@ -58,6 +58,6 @@ public func randomFakeName() -> String {
     return firstNameList.randomItem() + " " + lastNameList.randomItem()
 }
 
-public func randomInt(range: Range<Int>) -> Int {
-    return Int.random(range.startIndex, range.endIndex)
+public func randomInt(_ range: Range<Int>) -> Int {
+    return Int.random(range.lowerBound, range.upperBound)
 }

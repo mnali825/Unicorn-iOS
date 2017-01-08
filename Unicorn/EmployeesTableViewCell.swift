@@ -28,22 +28,28 @@ class EmployeesTableViewCell: UITableViewCell {
         }
     }
 
-    func configureCell(employee:Employee) {
+    func configureCell(_ employee:Employee) {
         
         nameLabel.text = employee.name
-        efficiencyLabel.text = "Efficiency: \(employee.efficiency*100)% "
+        let efficiency:Double! = employee.efficiency * 100
+        if let efficiencyText = efficiency {
+            efficiencyLabel.text = "Efficiency: \(efficiencyText)% "
+        }
         
-        costLabel.textColor = UIColor.redColor()
+        costLabel.textColor = UIColor.red
         costLabel.text = "Cost: $\(employee.salary)/sec"
         
-        profitLabel.textColor = UIColor.greenColor()
+        profitLabel.textColor = UIColor.green
 
         randomLabel.text = employee.catchPhrase
         
         let increase = Double(languageKnowledge[currentCodingLanguage]!)
         profit = Int(employee.efficiency * increase - employee.salary)
         //employee.profit = profit
-        profitLabel.text = "Profit: $\(profit)/sec (\(currentCodingLanguage))"
+        if let profitText = profit {
+            profitLabel.text = "Profit: $\(profitText)/sec (\(currentCodingLanguage))"
+        }
+        
         
     }
 

@@ -14,33 +14,33 @@ class RecruitTableVC: UITableViewController {
     
     var possibleEmployee:Int = 5
     var canRefresh:Bool = true
-    var timer = NSTimer()
+    var timer = Timer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
         let currNumEmployees = Employees.count
         self.title = "Employees \(currNumEmployees)/\(totalNumEmployees)"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refreshRecruits")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(RecruitTableVC.refreshRecruits))
     }
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return possibleEmployee
     }
 
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("Employee") as? RecruitTableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "Employee") as? RecruitTableViewCell {
             cell.configureCell(indexPath.row)
             
             cell.button.tag = indexPath.row
-            let tapGesture = UITapGestureRecognizer(target: self, action: Selector("handleDeleteTap:"))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RecruitTableVC.handleDeleteTap(_:)))
             cell.button.addGestureRecognizer(tapGesture)
             return cell
         } else {
@@ -48,15 +48,15 @@ class RecruitTableVC: UITableViewController {
         }
     }
     
-    func handleDeleteTap(sender: UITapGestureRecognizer)
+    func handleDeleteTap(_ sender: UITapGestureRecognizer)
     {
         if let button = sender.view as? UIButton
         {
             if Employees.count < totalNumEmployees {
                 
                 //Find current cell and add it to Employees
-                let indexPath = NSIndexPath(forRow: button.tag, inSection: 0)
-                let cell = tableView.cellForRowAtIndexPath(indexPath) as? RecruitTableViewCell
+                let indexPath = IndexPath(row: button.tag, section: 0)
+                let cell = tableView.cellForRow(at: indexPath) as? RecruitTableViewCell
                 
                 Employees.append((cell?.currentEmployee)!)
                 
@@ -67,9 +67,9 @@ class RecruitTableVC: UITableViewController {
                 self.title = "Employees \(currNumEmployees)/\(totalNumEmployees)"
                 
                 //Decrememnt number of rows and delete row at index path
-                possibleEmployee--
-                possibleEmployees.removeAtIndex(button.tag)
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                possibleEmployee -= 1
+                possibleEmployees.remove(at: button.tag)
+                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
                 self.tableView.reloadData()
                 
                 //print(totalMoneyIncrease)
@@ -80,7 +80,7 @@ class RecruitTableVC: UITableViewController {
     @IBAction func refreshRecruits() {
         if canRefresh == true {
             canRefresh = false
-            timer = NSTimer.scheduledTimerWithTimeInterval(30.0, target: self, selector: "refreshTimer", userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(RecruitTableVC.refreshTimer), userInfo: nil, repeats: true)
             possibleEmployee = 5
             possibleEmployees = []
             for _ in 1...5 {

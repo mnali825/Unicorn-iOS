@@ -22,7 +22,7 @@ class LearnTableVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = false
         for index in 1...codingLanguages.count {
             required.append(100 * index * index)
         }
@@ -42,18 +42,18 @@ class LearnTableVC: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return codingLanguages.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("CodingLanguages") as? CodingTableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "CodingLanguages") as? CodingTableViewCell {
             cell.configureCell(codingLanguages[indexPath.row], required: required[indexPath.row], gained: gained[indexPath.row], uses:codingUses[indexPath.row], profit: averageProfit[indexPath.row], onOrNah:isActive[indexPath.row])
             cell.select.tag = indexPath.row
 
